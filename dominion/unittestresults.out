@@ -1,0 +1,71 @@
+Result for running tests:
+unittest1.c:
+initializeGame(2, k, 1, &G) = 0
+supplyCount(great_hall, &G) = 8
+TEST COMPLETEDFile 'dominion.c'
+Lines executed:16.25% of 560
+Creating 'dominion.c.gcov'
+
+unittest2.c:
+-1 correctly returns true
+1 correctly returns true
+0 correctly returns true
+TESTS COMPLETEDFile 'dominion.c'
+Lines executed:1.07% of 560
+Creating 'dominion.c.gcov'
+
+unittest3.c:
+r correctly returns -1
+File 'dominion.c'
+Lines executed:1.25% of 560
+Creating 'dominion.c.gcov'
+
+unittest4.c:
+game is not over, returns 0
+File 'dominion.c'
+Lines executed:16.79% of 560
+Creating 'dominion.c.gcov'
+
+outpostTest.c:
+Test 1: outpost
+expected outpost flag to be set to 1, actually set to 1
+TESTS COMPLETED
+File 'dominion.c'
+Lines executed:18.21% of 560
+Creating 'dominion.c.gcov'
+
+villageTest.c:
+Test 1: village
+Test failed
+Tests completed
+File 'dominion.c'
+Lines executed:18.39% of 560
+Creating 'dominion.c.gcov'
+
+smithyTest.c:
+Test 1: smithy
+expected 8 cards, received 7 cards
+expected 1 cards to be discarded, discarded 2
+Test 2: smithy
+discared cards should be 1, actual was 1
+
+ >>>>> SUCCESS: Testing complete smithy <<<<<
+
+File 'dominion.c'
+Lines executed:18.39% of 560
+Creating 'dominion.c.gcov'
+
+adventurerTest.c:
+Test 1:adventurer
+expected 1 coppers to be drawn, actual of 1
+expected 6 cards to be in hand, actual of 7
+expected 2 coppers to be drawn, actual of 2
+expected 6 cards to be in hand, actual of 7
+expected 1 silvers to be drawn, actual of 1
+expected 6 cards to be in hand, actual of 5
+expected 2 silvers to be drawn, actual of 2
+expected 6 cards to be in hand, actual of 5
+File 'dominion.c'
+Lines executed:17.50% of 560
+Creating 'dominion.c.gcov'
+
