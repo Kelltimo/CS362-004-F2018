@@ -1,0 +1,21 @@
+Result for running tests:
+randomtestcard1.c:
+Testing Smithy card 
+Inputs: 
+Deck size: 9
+ Hand Count: 1
+ Players: 4
+Position: 4
+Test - play Smithy gain 3 cards
+Failed - expected hand count of 3, actual count 4
+Test - Other players deck will remain unchained
+Passed - deck size expected 10, actual size of 10
+Test - Other players hand count will remain unchained
+Passed - hand count size expected 0, actual size of 0
+Test - Smithy card is in played pile after use
+Failed - expected increase in played of 1, actual of played 2
+Test - Test supply counts to make sure they aren't distributed
+Failed - expected 12 estates, received 10
+Passed - supply counts for victory and curses are the same
+Test - test supply counts for treasure that should have been given out
+Passed - supply counts for treasure cards equal

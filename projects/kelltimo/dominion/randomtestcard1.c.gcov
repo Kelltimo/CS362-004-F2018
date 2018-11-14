@@ -1,0 +1,170 @@
+        -:    0:Source:randomtestcard1.c
+        -:    0:Graph:randomtestcard1.gcno
+        -:    0:Data:randomtestcard1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include <string.h>
+        -:    4:#include <stdio.h>
+        -:    5:#include <assert.h> 
+        -:    6:#include "rngs.h"
+        -:    7:#include <stdlib.h>
+        -:    8:#include <time.h>
+        -:    9:
+        -:   10:void smithyRandom(int player, int numPlayers, int maxDeck, struct gameState g); 
+        -:   11:
+        -:   12:	
+function main called 1 returned 100% blocks executed 100%
+        1:   13:int main() {
+        -:   14:	int i, j; 
+        1:   15:	int numTests = 20000; 
+        -:   16:	int numPlayers; 
+        -:   17:	int maxDeck; 
+        -:   18:	int position; 
+        1:   19:	int player = 0; 
+        -:   20:	struct gameState g; 
+        1:   21:	int k[10] = {duchy, gardens, province, estate, tribute, mine, cutpurse, ambassador, great_hall, adventurer}; 
+        1:   22:	int deckSize = 27; 
+        -:   23:
+        1:   24:	srand(time(NULL)); 
+call    0 returned 100%
+call    1 returned 100%
+        -:   25:
+        1:   26:	printf("Testing Smithy card \n"); 
+call    0 returned 100%
+    20001:   27:	for(i = 0; i < numTests; i++) {
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+    20000:   28:		numPlayers = (rand()%3)+2; 				// rand num of players
+call    0 returned 100%
+    20000:   29:		initializeGame(numPlayers, k, 1000, &g); 
+call    0 returned 100%
+    20000:   30:		maxDeck = rand()%deckSize;  		// rand deck size
+call    0 returned 100%
+    20000:   31:		g.deckCount[player] = maxDeck; 
+    20000:   32:		g.handCount[player] = rand()%6; 			// rand starting hand
+call    0 returned 100%
+   280031:   33:		for(j = 0; j < maxDeck; j++) {
+branch  0 taken 93%
+branch  1 taken 7% (fallthrough)
+   260031:   34:			g.deck[player][j] = (rand()%17)+1; 		// randomize deck 
+call    0 returned 100%
+        -:   35:		}
+        -:   36:	}
+        -:   37:
+        1:   38:	printf("Inputs: \nDeck size: %d\n Hand Count: %d\n Players: %d\nPosition: %d\n", maxDeck, g.handCount[player], numPlayers, position); 
+call    0 returned 100%
+        -:   39:
+        1:   40:	smithyRandom(player, numPlayers, maxDeck, g); 
+call    0 returned 100%
+        -:   41:
+        1:   42:	return 0; 
+        -:   43:
+        -:   44:}
+        -:   45:
+        -:   46:
+function smithyRandom called 1 returned 100% blocks executed 72%
+        1:   47:void smithyRandom(int player, int numPlayers, int maxDeck, struct gameState g) {
+        1:   48:	int player2 = 1; 
+        -:   49:	struct gameState testState; 				// our test state 
+        -:   50:
+        1:   51:	memcpy(&testState, &g, sizeof(struct gameState)); 
+        1:   52:	cardEffect(smithy, 0, 0, 0, &testState, 0, 0); 
+call    0 returned 100%
+        -:   53:
+        1:   54:	printf("Test - play Smithy gain 3 cards\n"); 
+call    0 returned 100%
+        1:   55:	if(testState.handCount[player] == g.handCount[player] + 2) 			// gain 3 cards -1 smithy card = 2
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   56:		printf("Passed - expected hand count of %d, actual count %d\n", g.handCount[player] +2, testState.handCount[player]); 
+call    0 never executed
+        -:   57:
+        -:   58:	else 
+        1:   59:		printf("Failed - expected hand count of %d, actual count %d\n", g.handCount[player] +2, testState.handCount[player]); 
+call    0 returned 100%
+        -:   60:
+        1:   61:	printf("Test - Other players deck will remain unchained\n"); 
+call    0 returned 100%
+        1:   62:	if(testState.deckCount[player2] == g.deckCount[player2]) 
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        1:   63:		printf("Passed - deck size expected %d, actual size of %d\n", g.deckCount[player2], testState.deckCount[player2]); 
+call    0 returned 100%
+        -:   64:	else 
+    #####:   65:		printf("Failed - deck size expected %d, actual size of %d\n", g.deckCount[player2], testState.deckCount[player2]); 
+call    0 never executed
+        -:   66:
+        1:   67:	printf("Test - Other players hand count will remain unchained\n"); 
+call    0 returned 100%
+        1:   68:	if(testState.handCount[player2] == g.handCount[player2]) 
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        1:   69:		printf("Passed - hand count size expected %d, actual size of %d\n", g.handCount[player2], testState.handCount[player2]); 
+call    0 returned 100%
+        -:   70:	else 
+    #####:   71:		printf("Failed - hand count size expected %d, actual size of %d\n", g.handCount[player2], testState.handCount[player2]); 
+call    0 never executed
+        -:   72:
+        1:   73:	printf("Test - Smithy card is in played pile after use\n"); 
+call    0 returned 100%
+        1:   74:	if(testState.playedCardCount == 1)								// count should always be - 3
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   75:		printf("Passed - expected increase in played of %d, actual of played %d\n", 1, testState.playedCardCount);
+call    0 never executed
+        -:   76:	else 
+        1:   77:		printf("Failed - expected increase in played of %d, actual of played %d\n", 1, testState.playedCardCount);
+call    0 returned 100%
+        -:   78:
+        1:   79:	printf("Test - Test supply counts to make sure they aren't distributed\n");
+call    0 returned 100%
+        1:   80:	if(g.supplyCount[estate] != testState.supplyCount[estate]) 
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        1:   81:		printf("Failed - expected %d estates, received %d\n", g.supplyCount[estate], testState.supplyCount[estate]); 
+call    0 returned 100%
+        1:   82:	if(g.supplyCount[duchy] != testState.supplyCount[duchy]) 
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   83:		printf("Failed - expected %d duchy, received %d\n", g.supplyCount[duchy], testState.supplyCount[duchy]); 
+call    0 never executed
+        1:   84:	if(g.supplyCount[province] != testState.supplyCount[province]) 
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   85:		printf("Failed - expected %d province, received %d\n", g.supplyCount[province], testState.supplyCount[province]); 
+call    0 never executed
+        1:   86:	if(g.supplyCount[curse] != testState.supplyCount[curse]) 
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   87:		printf("Failed - expected %d curses, received %d\n", g.supplyCount[curse], testState.supplyCount[curse]); 
+call    0 never executed
+        -:   88:
+        -:   89:	else
+        1:   90:		printf("Passed - supply counts for victory and curses are the same\n"); 
+call    0 returned 100%
+        -:   91:
+        1:   92:	printf("Test - test supply counts for treasure that should have been given out\n"); 
+call    0 returned 100%
+        1:   93:	if(g.supplyCount[copper] != testState.supplyCount[copper])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   94:		printf("Failed - copper doesn't match expected %d, actual %d\n", g.supplyCount[copper], testState.supplyCount[copper]); 
+call    0 never executed
+        1:   95:	if(g.supplyCount[silver] != testState.supplyCount[silver])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   96:		printf("Failed - silver doesn't match expected %d, actual %d\n", g.supplyCount[silver], testState.supplyCount[silver]); 
+call    0 never executed
+        1:   97:	if(g.supplyCount[gold] != testState.supplyCount[gold])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   98:		printf("Failed - gold doesn't match expected %d, actual %d\n", g.supplyCount[gold], testState.supplyCount[gold]); 
+call    0 never executed
+        -:   99:
+        -:  100:	else 
+        1:  101:		printf("Passed - supply counts for treasure cards equal\n"); 
+call    0 returned 100%
+        -:  102:
+        1:  103:}

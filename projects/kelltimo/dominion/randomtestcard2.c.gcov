@@ -1,0 +1,113 @@
+        -:    0:Source:randomtestcard2.c
+        -:    0:Graph:randomtestcard2.gcno
+        -:    0:Data:randomtestcard2.gcda
+        -:    0:Runs:3
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include <string.h>
+        -:    4:#include <stdio.h>
+        -:    5:#include <assert.h> 
+        -:    6:#include "rngs.h"
+        -:    7:#include <stdlib.h>
+        -:    8:#include <time.h>
+        -:    9:
+        -:   10:void villageRandom(int player, int numPlayers, int maxDeck, struct gameState g); 
+        -:   11:
+        -:   12:	
+function main called 3 returned 100% blocks executed 100%
+        3:   13:int main() {
+        -:   14:	int i, j; 
+        3:   15:	int numTests = 20000; 
+        -:   16:	int numPlayers; 
+        -:   17:	int maxDeck; 
+        -:   18:	int position; 
+        3:   19:	int player = 0; 
+        -:   20:	struct gameState g; 
+        3:   21:	int k[10] = {duchy, gardens, province, estate, tribute, mine, cutpurse, ambassador, great_hall, adventurer}; 
+        3:   22:	int deckSize = 27; 
+        -:   23:
+        3:   24:	srand(time(NULL)); 
+call    0 returned 100%
+call    1 returned 100%
+        -:   25:
+        3:   26:	printf("Testing village card \n"); 
+call    0 returned 100%
+    60003:   27:	for(i = 0; i < numTests; i++) {
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+    60000:   28:		numPlayers = (rand()%3)+2; 				// rand num of players
+call    0 returned 100%
+    60000:   29:		initializeGame(numPlayers, k, 1000, &g); 
+call    0 returned 100%
+    60000:   30:		maxDeck = rand()%deckSize;  		// rand deck size
+call    0 returned 100%
+    60000:   31:		g.deckCount[player] = maxDeck; 
+    60000:   32:		g.handCount[player] = rand()%6; 			// rand starting hand
+call    0 returned 100%
+   840221:   33:		for(j = 0; j < maxDeck; j++) {
+branch  0 taken 93%
+branch  1 taken 7% (fallthrough)
+   780221:   34:			g.deck[player][j] = (rand()%17)+1; 		// randomize deck 
+call    0 returned 100%
+        -:   35:		}
+        -:   36:	}
+        -:   37:
+        3:   38:	printf("Inputs: \nDeck size: %d\n Hand Count: %d\n Players: %d\nPosition: %d\n", maxDeck, g.handCount[player], numPlayers, position); 
+call    0 returned 100%
+        -:   39:
+        3:   40:	villageRandom(player, numPlayers, maxDeck, g); 
+call    0 returned 100%
+        -:   41:
+        3:   42:	return 0; 
+        -:   43:}
+        -:   44:
+        -:   45:
+function villageRandom called 3 returned 100% blocks executed 79%
+        3:   46:void villageRandom(int player, int numPlayers, int maxDeck, struct gameState g){
+        3:   47:	int player2 = 1; 
+        -:   48:	struct gameState testState; 				// our test state 
+        -:   49:
+        3:   50:	memcpy(&testState, &g, sizeof(struct gameState)); 
+        3:   51:	cardEffect(village, 0, 0, 0, &testState, 0, 0); 
+call    0 returned 100%
+        -:   52:
+        -:   53:
+        3:   54:	printf("Test - draw one card, discard one card for the hand count");
+call    0 returned 100%
+        3:   55:	if(testState.handCount[player] == g.handCount[player]) 
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        3:   56:		printf("Passed - expected hand count %d, actual count %d\n", g.handCount[player], testState.handCount[player]); 
+call    0 returned 100%
+        -:   57:	else
+    #####:   58:		printf("Failed - expected hand count %d, actual count %d\n", g.handCount[player], testState.handCount[player]);  
+call    0 never executed
+        -:   59:
+        -:   60:
+        -:   61:
+        3:   62:	printf("Test - player is drawing from own pile\n"); 
+call    0 returned 100%
+        3:   63:	if(g.deckCount[player] == testState.deckCount[player]) 
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   64:		printf("Passed - expected %d deck size actual of %d\n", g.deckCount[player], testState.deckCount[player]); 
+call    0 never executed
+        -:   65:	else 
+        3:   66:		printf("Failed - expected %d deck size actual of %d\n", g.deckCount[player], testState.deckCount[player]); 
+call    0 returned 100%
+        -:   67:
+        3:   68:	printf("Test - village card is added to played pile\n");
+call    0 returned 100%
+        3:   69:	if(testState.playedCardCount == 1)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        3:   70:		printf("Passed - expected played piled to be %d, actual of %d\n", 1, testState.playedCardCount); 
+call    0 returned 100%
+        -:   71:	else
+    #####:   72:		printf("Failed - expected played piled to be %d, actual of %d\n", 1, testState.playedCardCount); 	
+call    0 never executed
+        -:   73:
+        -:   74:
+        -:   75:
+        3:   76:}
